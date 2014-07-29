@@ -1,0 +1,301 @@
+package fighters;
+
+import framework.BattleField;
+import framework.Random131;
+
+//Soldier that I created for the homework project
+public class BasicSoldier {
+
+	//Initial constant variables
+	public final static int INITIAL_HEALTH = 10;
+	public final static int ARMOR = 20;
+	public final static int STRENGTH = 30;
+	public final static int SKILL = 40;
+	
+	public final static int UP = 0;
+	public final static int RIGHT = 1;
+	public final static int DOWN = 2;
+	public final static int LEFT = 3;
+	public final static int UP_AND_RIGHT = 4;
+	public final static int DOWN_AND_RIGHT = 5;
+	public final static int DOWN_AND_LEFT = 6;
+	public final static int UP_AND_LEFT = 7;
+	public final static int NEUTRAL = -1;
+	
+	//Instance variables of the class
+	public final BattleField battleField;
+	public int row, col;
+	public int health; 
+	public final int team;
+	
+	//Constructor which initializes soldiers at the beginning of battle
+	public BasicSoldier(BattleField battleFieldIn, int teamIn, int rowIn, int colIn) {
+		health = INITIAL_HEALTH;
+		team = teamIn;
+		battleField = battleFieldIn; 
+		row = rowIn;
+		col = colIn;		
+	}
+	
+	//Checks if soldier can move
+	//If it can, it returns "true". If not, it returns "false"
+	public boolean canMove() {
+		
+		//Checks if a space is empty to move into
+		if ((battleField.get(row - 1, col) == BattleField.EMPTY) || 
+		   (battleField.get(row + 1, col) == BattleField.EMPTY) || 
+		   (battleField.get(row, col - 1) == BattleField.EMPTY) ||
+		   (battleField.get(row, col + 1) == BattleField.EMPTY)) {
+			return true;
+		} else {
+			//if not a single space is empty, return false
+			return false;
+		}
+	}
+	
+	//Counts the number of remaining enemies in the battlefield
+	public int numberOfEnemiesRemaining() {
+		
+		//Variable that counts the number of enemies
+		int numEnemies = 0;
+		
+		//Loops through every space on battlefield
+		for (int battleRow = 0; battleRow < battleField.getRows(); battleRow++) {
+			for (int battleCol = 0; battleCol < battleField.getCols(); battleCol++ ) {
+				
+				//Increments the number of enemies variable by one if an enemy is found
+				if ((battleField.get(battleRow,battleCol) == BattleField.RED_TEAM) && (team == BattleField.BLUE_TEAM)) {
+					numEnemies++;
+				}
+				if ((battleField.get(battleRow,battleCol) == BattleField.BLUE_TEAM) && (team == BattleField.RED_TEAM)) {
+					numEnemies++;
+				}
+			}
+		}
+		
+		//Return final count of enemies
+		return numEnemies;
+	}
+    
+	//Calculates distance between the current soldier and the desired destination
+	//Pass in the row and column (integers) of the desired location as arguments to return distance.
+	public int getDistance(int destinationRow, int destinationCol) {
+		
+		//Calculates the difference between the destination row and actual row
+		//Calculates the difference between the destination col and actual col
+		int distanceCol = col - destinationCol;
+		int distanceRow = row - destinationRow;
+		
+		//Calculates the absolute value of the difference just in case the value is negative
+		distanceCol = Math.abs(distanceCol);
+		distanceRow = Math.abs(distanceRow);
+		
+		//Adds the two values together and returns the final value
+		int total = distanceCol + distanceRow;
+		return total;
+	}
+	
+	//Determines the direction required to access the determined destination
+	//Pass in the row and column (integers) of the desired location as arguments to return the direction
+	public int getDirection(int destinationRow, int destinationCol) {
+		if ((destinationRow > row) && (destinationCol == col)) {
+			return DOWN;
+		} else if ((destinationRow > row) && (destinationCol > col)) {
+			return DOWN_AND_RIGHT;
+		} else if ((destinationRow > row) && (destinationCol < col)) {
+			return DOWN_AND_LEFT;
+		} else if ((destinationRow < row) && (destinationCol == col)) {
+			return UP;
+		} else if ((destinationRow < row) && (destinationCol > col)) {
+			return UP_AND_RIGHT;
+		} else if ((destinationRow < row) && (destinationCol < col)) {
+			return UP_AND_LEFT;
+		} else if ((destinationRow == row) && (destinationCol < col)) {
+			return LEFT;
+		} else if ((destinationRow == row) && (destinationCol > col)) {
+			return RIGHT;
+		} else {
+			return NEUTRAL;
+		}
+	}
+	
+	//Determines direction of nearest friend or teammate
+	public int getDirectionOfNearestFriend() {
+		
+		//Represents shortest distance from friend to soldier 
+		//Assigns a random place holder value to temp
+		int temp = battleField.getRows() + battleField.getCols() ;
+		
+		//Represents direction of current nearest friend
+		//Start out with random place holder value that doesn't represent one of the direction values
+		int currentDirection = 22;
+		
+		//Loops through every space on battlefield
+		for (int battleRow = 0; battleRow < battleField.getRows(); battleRow++) {
+			for (int battleCol = 0; battleCol < battleField.getCols(); battleCol++) {
+				
+				//Checks if there is an enemy in the space
+				if (((battleField.get(battleRow, battleCol) == BattleField.RED_TEAM) && (team == BattleField.RED_TEAM))
+				|| ((battleField.get(battleRow, battleCol) == BattleField.BLUE_TEAM) && (team == BattleField.BLUE_TEAM))) {
+					
+					//Checks if distance is less than current shortest distance 
+					//Checks if it's not yourself
+					if ((getDistance(battleRow, battleCol) < temp) && (getDistance(battleRow, battleCol) > 0)) {
+						
+						//Assigns distance of closer friend to temp
+						//Assigns direction of closer  friend to currentDirection
+						temp = getDistance(battleRow, battleCol);
+						currentDirection = getDirection(battleRow, battleCol);
+					}
+				}
+			}
+		}
+		
+		//If currentDirection is not touched, return NEUTRAL and end program
+		//In other words: if a closer friend was never found, return NEUTRAL
+		if (currentDirection == 22) {
+			return NEUTRAL;
+		}
+		
+		//Return direction of closest friend
+		return currentDirection;
+	}
+	
+	//Counts how many friends are in the desired radius
+	//Pass an integer as an argument and the number of friends within that distance is returned 
+	public int countNearbyFriends(int radius) {
+		
+		//Variable responsible for counting number of friends
+		int counter = 0;
+		
+		//Loops through every space on battlefield
+		for (int battleRow = 0; battleRow < battleField.getRows(); battleRow++) {
+			for (int battleCol = 0; battleCol < battleField.getCols(); battleCol++) {
+				
+				//If on team...
+				if (((battleField.get(battleRow,battleCol) == BattleField.RED_TEAM) && (team == BattleField.RED_TEAM))
+					|| ((battleField.get(battleRow,battleCol) == BattleField.BLUE_TEAM) && (team == BattleField.BLUE_TEAM))) {
+					    
+					    //If not yourself
+						if (getDistance(battleRow, battleCol) > 0) {
+							
+							//If within desired radius
+							if (getDistance(battleRow,battleCol) <= radius) {
+								
+								//Increment number of friends
+								counter++;
+							}
+						}
+				}
+			}
+		}
+		
+		//Return number of friends
+		return counter;
+	}
+
+	//Determines the direction of nearest enemy within a desired radius
+	//Pass as integer as an argument and the direction of the closest enemy within that radius is returned
+	public int getDirectionOfNearestEnemy(int radius) {
+		
+		//Represents shortest distance from friend to soldier 
+		//Assigns a random place holder value to temp
+		int temp = 1000;
+		
+		//Represents direction of current nearest enemy
+		//Start out with random place holder value that doesn't represent one of the direction values
+		int currentDirection = 22;
+		
+		//Loops that checks every space on battlefield
+		for (int battleRow = 0; battleRow < battleField.getRows(); battleRow++) {
+			for (int battleCol = 0; battleCol < battleField.getCols(); battleCol++) {
+				
+				//Checks to see if an enemy is on that space
+				if (((battleField.get(battleRow,battleCol) == BattleField.RED_TEAM) && (team == BattleField.BLUE_TEAM))
+					|| ((battleField.get(battleRow,battleCol) == BattleField.BLUE_TEAM) && (team == BattleField.RED_TEAM))) {
+					
+					//Checks to see if distance of that enemy is within desired radius
+					if (getDistance(battleRow,battleCol) <= radius) {
+						
+						//Changes initial place holder
+						if (temp == 1000) {
+							temp = getDistance(battleRow, battleCol);
+							currentDirection = getDirection(battleRow, battleCol);
+						}
+						
+						//Checks to see if distance of current enemy is less than distance of previous closest enemy
+						if (getDistance(battleRow, battleCol) < temp) {
+							
+							//updates distance of closest enemy
+							//updates direction of closest enemy
+							temp = getDistance(battleRow, battleCol);
+							currentDirection = getDirection(battleRow, battleCol);
+						}
+					}
+				}
+			}
+		}
+		
+		//If temp was never altered, return NEUTRAL
+		//In other words: 
+		if (temp == 1000) {
+			return NEUTRAL;
+		}
+		return currentDirection;
+	}
+	
+	//Heart of BasicSoldier Class
+	//Soldier has only 3 choices: attack, move or do nothing
+	//This method is designed for the soldier to only make one move at a time for his turn
+	public void performMyTurn() {
+		if (team == BattleField.RED_TEAM) {
+			if (battleField.get(row - 1, col) == BattleField.BLUE_TEAM) {
+				battleField.attack(row - 1, col);
+			} else if (battleField.get(row + 1, col) == BattleField.BLUE_TEAM) {
+				battleField.attack(row + 1, col);
+			} else if (battleField.get(row, col - 1) == BattleField.BLUE_TEAM) {
+				battleField.attack(row, col - 1);
+			} else if (battleField.get(row, col + 1) == BattleField.BLUE_TEAM) {
+				battleField.attack(row, col + 1);
+			} else if (battleField.get(row - 1, col) == BattleField.EMPTY) {
+				row--;
+			} else if (battleField.get(row + 1, col) == BattleField.EMPTY) {
+				row++;
+			} else if (battleField.get(row, col - 1) == BattleField.EMPTY) {
+				col--;
+			} else if (battleField.get(row, col + 1) == BattleField.EMPTY) {
+				col++;
+			} else {
+				
+			}
+				
+		}
+		
+		if (team == BattleField.BLUE_TEAM) {
+			if (battleField.get(row - 1, col) == BattleField.RED_TEAM) {
+				battleField.attack(row - 1, col);
+			} else if (battleField.get(row + 1, col) == BattleField.RED_TEAM) {
+				battleField.attack(row + 1, col);
+			} else if (battleField.get(row, col - 1) == BattleField.RED_TEAM) {
+				battleField.attack(row, col - 1);
+			} else if (battleField.get(row, col + 1) == BattleField.RED_TEAM) {
+				battleField.attack(row, col + 1);
+			}else if (battleField.get(row - 1, col) == BattleField.EMPTY) {
+				row--;
+			} else if (battleField.get(row + 1, col) == BattleField.EMPTY) {
+				row++;
+			} else if (battleField.get(row, col - 1) == BattleField.EMPTY) {
+				col--;
+			} else if (battleField.get(row, col + 1) == BattleField.EMPTY) {
+				col++;
+			} else {
+				
+			}	
+		}
+		
+	}
+	
+	
+
+	
+}

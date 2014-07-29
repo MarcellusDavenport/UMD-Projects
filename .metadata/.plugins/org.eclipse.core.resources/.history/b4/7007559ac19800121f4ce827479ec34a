@@ -1,0 +1,71 @@
+import junit.framework.TestCase;
+
+public class PublicTests extends TestCase {
+	
+	public void testBasicConstructorsAndGetters() {
+	
+		MyDouble a = new MyDouble(5.7), b = new MyDouble(-3.7);
+		MyDouble d = new MyDouble(555.729);
+		
+		ComplexNumber x = new ComplexNumber(a, b);
+		assertTrue(x.getReal().compareTo(a) == 0 && 
+				x.getImag().compareTo(b) == 0);
+		
+		ComplexNumber z = new ComplexNumber(d);
+		assertTrue(z.getReal().compareTo(d) == 0 && 
+				z.getImag().compareTo(new MyDouble(0)) == 0);
+	}
+	
+	public void testCopyConstructor() {
+		
+		MyDouble a = new MyDouble(5.7), b = new MyDouble(-3.7);
+		
+		ComplexNumber x = new ComplexNumber(a, b);
+		ComplexNumber y = new ComplexNumber(x);
+		assertTrue(x != y);     // Check to be sure they are not aliased!
+		assertTrue(y.getReal().compareTo(a) == 0 && 
+				y.getImag().compareTo(b) == 0);
+	}
+	
+	public void testStringMethod() {
+		//Test all positives
+		MyDouble a = new MyDouble(4.5);
+		MyDouble b = new MyDouble(5.5);
+		ComplexNumber newComplex = new ComplexNumber(a, b);
+		String myString = "4.5+5.5i";
+		String test = newComplex.toString();
+		assertTrue(myString.equals(test));
+		
+		//Test all negatives
+		MyDouble c = new MyDouble(-4.5);
+		MyDouble d = new MyDouble(-5.5);
+		ComplexNumber newComplex1 = new ComplexNumber(c, d);
+		String myString1 = "-4.5-5.5i";
+		String test1 = newComplex1.toString();
+		assertTrue(myString1.equals(test1));
+		
+		//Test all real negative and imaginary positive
+		MyDouble e = new MyDouble(-4.5);
+		MyDouble f = new MyDouble(5.5);
+		ComplexNumber newComplex2 = new ComplexNumber(e, f);
+		String myString2 = "-4.5+5.5i";
+		String test2 = newComplex2.toString();
+		assertTrue(myString2.equals(test2));
+		
+		//Test all real positive and imaginary negative
+		MyDouble g = new MyDouble(4.5);
+		MyDouble h = new MyDouble(-5.5);
+		ComplexNumber newComplex3 = new ComplexNumber(g, h);
+		String myString3 = "4.5-5.5i";
+		String test3 = newComplex3.toString();
+		assertTrue(myString3.equals(test3));		
+	}
+	
+	public void testParseComplexNumber() {
+		String actualString = "4.5+2.4i";
+		ComplexNumber testComplex = ComplexNumber.parseComplexNumber("4.5+2.4i");
+		String testString = testComplex.toString();
+		assertTrue(testString.equals(actualString));
+	}
+
+}

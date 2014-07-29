@@ -1,0 +1,32 @@
+package student_classes;
+
+public class Card {
+	
+	private Suits suit;
+	private Numerals numeral;
+	
+	public Card(Suits suit, Numerals numeral) {
+		this.suit = suit;
+		this.numeral = numeral;
+	}
+	
+	public Card(Card aCard) {
+
+	}
+	
+	public Suits get_suit() {
+		return suit;
+	}
+	
+	public Numerals get_numeral() {
+		return numeral;
+	}
+	
+	public String toString() {
+		return "null";
+	}
+	
+    public void compareTo(Card aCard) {
+		
+	}
+}

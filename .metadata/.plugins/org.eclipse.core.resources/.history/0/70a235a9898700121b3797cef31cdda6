@@ -1,0 +1,87 @@
+package fighters;
+
+import framework.BattleField;
+import framework.Random131;
+
+public class BasicSoldier {
+
+	public final static int INITIAL_HEALTH = 10;
+	public final static int ARMOR = 20;
+	public final static int STRENGTH = 30;
+	public final static int SKILL = 40;
+	
+	public final static int UP = 0;
+	public final static int RIGHT = 1;
+	public final static int DOWN = 2;
+	public final static int LEFT = 3;
+	public final static int UP_AND_RIGHT = 4;
+	public final static int DOWN_AND_RIGHT = 5;
+	public final static int DOWN_AND_LEFT = 6;
+	public final static int UP_AND_LEFT = 7;
+	public final static int NEUTRAL = -1;
+	
+	public final BattleField battleField;
+	public int row, col;
+	public int health; 
+	public final int team;
+	
+	public BasicSoldier(BattleField battleFieldIn, int teamIn, int rowIn, int colIn) {
+		health = INITIAL_HEALTH;
+		team = teamIn;
+		battleField = battleFieldIn;
+		row = rowIn;
+		col = colIn;		
+	}
+	
+	public boolean canMove() {
+		if ((battleField.get(col - 1, row) == BattleField.EMPTY) || 
+		   (battleField.get(col + 1, row) == BattleField.EMPTY) || 
+		   (battleField.get(col, row - 1) == BattleField.EMPTY) ||
+		   (battleField.get(col, row + 1) == BattleField.EMPTY)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public int numberOfEnemiesRemaining() {
+		int fieldRows = battleField.getRows();
+		int fieldCols = battleField.getCols();
+		int numEnemies = 0;
+		
+		for (int row = 0; row < fieldRows; row++) {
+			for (int col = 0; col < fieldCols; col++ ) {
+				if (battleField.get(row,col) == team) {
+					numEnemies++;
+				}
+			}
+		}
+	}
+	
+	public int getDistance(int destinationRow, int destinationCol) {
+		
+	}
+	
+	public int getDirection(int destinationRow, int destinationCol) {
+		
+	}
+	
+	public int getDirectionOfNearestFriend() {
+		
+	}
+	
+	public int countNearbyFriends(int radius) {
+		
+	}
+	
+	public int getDirectionOfNearestEnemy(int radius) {
+		
+	}
+	
+	public void performMyTurn() {
+		
+	}
+
+
+	
+}

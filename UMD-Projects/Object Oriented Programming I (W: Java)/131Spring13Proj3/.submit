@@ -1,0 +1,11 @@
+# Submit server .submit file for
+#  Course CMSC131-040x
+#  Project 3: Medieval Soldiers
+
+courseName=CMSC131-040x
+semester=201301
+projectNumber=3
+courseKey=fa507c4fccc1058c
+authentication.type=ldap
+baseURL=https://submit.cs.umd.edu:443
+submitURL=https://submit.cs.umd.edu:443/eclipse/SubmitProjectViaEclipse

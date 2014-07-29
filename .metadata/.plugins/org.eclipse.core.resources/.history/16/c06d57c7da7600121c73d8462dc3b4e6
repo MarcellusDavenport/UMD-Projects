@@ -1,0 +1,11 @@
+import java.util.Scanner;
+
+public class SportsQuiz {
+
+	public static void main(String[] args) {
+	
+		/* Students:  Remove this comment, and then fill in
+		 * the code to make this method do it's job!  */
+		
+	}
+}

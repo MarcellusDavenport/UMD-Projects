@@ -1,0 +1,31 @@
+package student_classes;
+
+public class Card {
+	
+	private Suits suit;
+	private Numerals numeral;
+	
+	public Card(Suits suit, Numerals numeral) {
+		this.suit = suit;
+		this.numeral = numeral;
+	}
+	
+	public Card(Card aCard) {
+		try {
+			aCard.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void compareTo(Card aCard) {
+		
+	}
+	
+	public Numerals get_numeral() {
+		return numeral;
+	}
+	
+	
+}

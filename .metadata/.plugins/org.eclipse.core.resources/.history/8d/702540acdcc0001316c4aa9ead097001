@@ -1,0 +1,132 @@
+package student_classes;
+
+import java.util.Iterator;
+import java.util.Set; // necessary return type for asSet method.
+/**
+ * A "bag" is a data-structure that implements a <em>multiset</em>, which is
+ * a set that allows multiple (duplicates). The standard operators on such
+ * a data-structure include:
+ * 
+ * 	Bag() --creates an empty bag (optionally, perhaps a default size?)
+ * 
+ * 	add( Type ele ) --adds an element of Type to the bag
+ * 
+ * 	remove( Type ele ) --removes an element from the bag; may throw IllegalStateException
+ * 					   --in the event that ele is NOT in the Bag.
+ * 
+ * 	contains( Type ele ) --returns True if ele is in bag.
+ * 
+ * 	count( Type ele ) --returns the number of occurrences of ele in set. 
+ *                 This is called the "multiplicity" of the element.
+ * 
+ * 	asSet() --returns a collection of the elements in this bag as set.
+ * 
+ *  size() --returns the number of elements in this bag taking into account
+ *           their multiplicities. For example: if the Bag contains the following
+ *           elements with multiplicities:
+ *           
+ *           Key    Count
+ *           ------------
+ *           "A"      2
+ *           "B"      3
+ *           "C"      1
+ *           
+ *           size() => 6.
+ * 
+ *  iterator() --returns an Iterator that also takes into account the multiplicities
+ *           of each key. So, an iterator() should iterate over exactly the same number
+ *           of elements as size().
+ * Important reminder: You will most likely replace references to <code>Object</code>
+ * that appear in parameters lists with your generic variable type(s).
+ * 
+ * @author UMD CS Department.
+ *
+ * @param
+ */
+public class Bag implements Iterable { // note you will need to parameterize this class and
+	                                   // most likely the implements declaration.
+	/* Instance variables */
+	
+	/**
+	 * Default (sole) constructor. Sets up internal data structures.
+	 */
+	public Bag() {
+		throw new UnsupportedOperationException("you must implement this method");
+	}
+	
+	/* public interface */
+	/**
+	 * Adds ele (Type) to the bag. If ele was already in the Bag, then its
+	 * internal count is incremented by 1; otherwise a new entry is made, 
+	 * indicating that at least 1 ele exists in this Bag.
+	 * @param ele
+	 */
+	public void add( Object ele ) { // replace Object with your Type variable
+		throw new UnsupportedOperationException("you must implement this method");
+	}
+	/**
+	 * Consider several possibilities here:
+	 * If the <code>ele</code> isn't in the Bag, throw an Illegal State Exception.
+	 * If only one <code>ele</code> exists in the Bag, then remove it.
+	 * If more than one <code>ele</code> exists in the Bag, make whatever changes are
+	 * necessary to indicate that one fewer <code>ele</code> now exists in the Bag.
+	 * Note, how you do this will depend upon your internal data-structure.
+	 * @param ele
+	 */
+	public void remove( Object ele ) { //replace Object with your Type
+		throw new UnsupportedOperationException("you must implement this method");
+	}
+	/**
+	 * Returns true if this Bag contains at least one copy of the <code>key</code>.
+	 * @param ele
+	 * @return
+	 */
+	public boolean contains( Object ele ) { // replace Object with your Type 
+		throw new UnsupportedOperationException("you must implement this method");
+	}
+	/**
+	 * Returns the number of occurrences of <code>ele</code> in the Bag; 
+	 * returns 0 in the event that <code>ele</code> is not in Bag.
+	 * @param ele
+	 * @return
+	 */
+	public int count( Object ele ) { //replace Object with your Type
+		throw new UnsupportedOperationException("you must implement this method");
+	}
+	/**
+	 * Return the keys as a Set---i.e., no duplicates, order-unimportant.
+	 * Use this function to determine the number of unique entries in the
+	 * Bag!
+	 * @return
+	 */
+	public Set asSet() { // parameterize Set<> with your type
+		throw new UnsupportedOperationException("you must implement this method");
+	}
+	/**
+	 * The "size" of a bag is the cardinality of the multiset that it
+	 * embodies. In English, that means that the size of your bag 
+	 * must accumulate the multiplicities of each element. For
+	 * example: suppose your Bag contains 
+	 * 
+	 * Key    Count
+	 * ------------
+	 * "A"     2
+	 * "B"     3
+	 * "C"     1
+	 * 
+	 * Then its size is 6.
+	 * 
+	 * @return
+	 */
+	public int size() {
+		throw new UnsupportedOperationException("you must implement this method");
+	}
+	/**
+	 * You will most likely return an instance of an inner class that you design
+	 * to manage an <em>immutable</em> Iteration of keys over this bag.
+	 * @return
+	 */
+	public Iterator iterator() {
+		throw new UnsupportedOperationException("you must implement this method");
+	}
+}

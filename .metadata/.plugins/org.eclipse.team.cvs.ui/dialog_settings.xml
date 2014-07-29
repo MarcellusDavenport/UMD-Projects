@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="NewLocationWizard">
+		<item value="false" key="ConfigurationWizardMainPage.STORE_DONT_VALIDATE_ID"/>
+		<list key="ConfigurationWizardMainPage.STORE_PATH_ID">
+			<item value="afs/glue/class/spring2014/cmsc/132/0201/student/113236501"/>
+			<item value="/afs/csic.umd.edu/users/tomr55/cvs132Spring2014/cs132032"/>
+			<item value="/afs/csic.umd.edu/users.tomr55/cvs132Spring2014/cs132032"/>
+			<item value="/afs/csic.umd.edu/users/fpe/cvs131Spring13/cs131400"/>
+			<item value="/afs/csic.umd.edu/users/fpe/cvs131Spring13/mdavenpo"/>
+		</list>
+		<list key="ConfigurationWizardMainPage.STORE_HOSTNAME_ID">
+			<item value="grace.umd.edu"/>
+			<item value="linuxlab.csic.umd.edu"/>
+			<item value="linuxlab.csic.umd.edu&#x0A;"/>
+		</list>
+		<list key="ConfigurationWizardMainPage.STORE_USERNAME_ID">
+			<item value="arjit"/>
+			<item value="cs132032"/>
+			<item value="cs131400"/>
+			<item value="cs131400&#x0A;"/>
+			<item value="mdavenpo"/>
+		</list>
+	</section>
+	<section name="org.eclipse.team.ccvs.ui.RepositoriesView">
+		<item value="0" key="selectedOrderBy"/>
+		<item value="" key="SelectedWorkingSet"/>
+		<item value="true" key="selectedSortingOrder"/>
+		<item value="" key="filterShowModules"/>
+	</section>
+	<section name="RefreshRemoteProjectWizard">
+		<item value="false" key="UseWorkingSet"/>
+	</section>
+</section>

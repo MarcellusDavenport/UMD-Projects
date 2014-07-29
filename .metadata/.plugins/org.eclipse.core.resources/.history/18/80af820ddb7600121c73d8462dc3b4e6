@@ -1,0 +1,10 @@
+import java.util.Scanner;
+
+public class SportsQuiz {
+
+	public static void main(String[] args) {
+	
+		System.out.println("Enter 1 to guess a sport, 2 to guess how many players:");
+		
+	}
+}

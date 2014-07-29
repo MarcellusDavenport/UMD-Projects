@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.jdt.debug.ui.MAIN_METHOD_SELECTION_DIALOG">
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode&gt;=131Spring13Proj5/&amp;lt;poker{Driver.java[Driver&lt;/infoNode&gt;&#x0A;&lt;infoNode&gt;=131Spring13Lab06/\/Users\/Marcellus\/Desktop\/eclipse\/plugins\/org.junit_3.8.2.v3_8_2_v20100427-1100\/junit.jar&amp;lt;junit.awtui(TestRunner.class[TestRunner&lt;/infoNode&gt;&#x0A;&lt;infoNode&gt;=131Spring13Proj7/&amp;lt;fishPond{Controller.java[Controller&lt;/infoNode&gt;&#x0A;&lt;infoNode&gt;=Spring2014-Proj2/src&amp;lt;gui{GameGUI.java[GameGUI&lt;/infoNode&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="62" key="DIALOG_Y_ORIGIN"/>
+			<item value="420" key="DIALOG_X_ORIGIN"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
+		</section>
+	</section>
+</section>

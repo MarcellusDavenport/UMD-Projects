@@ -1,0 +1,11 @@
+# Submit server .submit file for
+#  Course CMSC132
+#  Project 13: GUI Lab-Interest-Table
+
+courseName=CMSC132
+semester=201401
+projectNumber=13
+courseKey=a2b90c87a99e321c
+authentication.type=ldap
+baseURL=https://submit.cs.umd.edu:443/spring2014
+submitURL=https://submit.cs.umd.edu:443/spring2014/eclipse/SubmitProjectViaEclipse

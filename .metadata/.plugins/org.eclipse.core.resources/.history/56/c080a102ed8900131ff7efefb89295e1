@@ -1,0 +1,16 @@
+package student_classes;
+
+public class Card {
+	
+	private Suits suit;
+	private Numerals numeral;
+	
+	public Card(Suits suit, Numerals numeral) {
+		this.suit = suit;
+		this.numeral = numeral;
+	}
+	
+	public Card(Card aCard) {
+		
+	}
+}

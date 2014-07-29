@@ -1,0 +1,165 @@
+package student_classes;
+
+import static utilities.LList.*;
+import utilities.*;
+
+/*
+ * Under NO circumstances should you mess with the import statements
+ * directly above!
+ */
+
+/**
+ * Define all of your methods in this class, using the static imports from the
+ * LListLib.jar file, which is attached to the project.
+ * 
+ * @author UMD CS Dept.
+ * 
+ */
+public class ListFunctions {
+
+	/**
+	 * An example of using the LList library to define a common list function:
+	 * this one reverses the elements of a LList.
+	 * 
+	 * @param list
+	 * @return
+	 */
+
+	public static <T> LList<T> reverse(LList<T> list) {
+		if (isEmpty(list))
+			return list;
+		else
+			return reverse_aux(list, LList());
+	}
+
+	/*
+	 * Note the "pattern here." Normally, you define the "top level" function as
+	 * we did for "reverse" --above. Then we "delegate" to a private auxiliary
+	 * to do the work. Sometimes you can skip the aux and implement the function
+	 * directly, using only the primitives from the library. In this case,
+	 * however, because cons only "goes one way," we had to resort to this.
+	 */
+	private static <T> LList<T> reverse_aux(LList<T> list, LList reversed_list) {
+		if (isEmpty(list))
+			return reversed_list;
+		else
+			return reverse_aux(rest(list), cons(first(list), reversed_list));
+	}
+
+	/**
+	 * Performs the standard "merge sort" on two lists.
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static <T extends Comparable<T>> LList<T> msort(LList<T> list) {
+		if (list == null) {
+			return list;
+		} else {
+
+		}
+
+	}
+
+	private static <T extends Comparable<T>> void aux_msort(LList<T> list) {
+		if (length(list) > 1) {
+			// Split the array in half
+			LList<T> left = firstn(length(list) / 2, list);
+			LList<T> right = lastn(length(left), list);
+
+			// Sort each half
+			msort(left);
+			msort(right);
+
+			// Merge the halves together, overwriting the original array
+			list = merge(left, right);
+		}
+	}
+
+	/**
+	 * Given two semi-sorted lists, merge them into a new list by comparing the
+	 * head of each list and taking the appropriate actions.
+	 * 
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
+	public static <T extends Comparable<T>> LList<T> merge(LList<T> list1,
+			LList<T> list2) {
+		LList<T> newList = LList();
+		// while there is data in both lists
+		while (length(list1) > 0 && length(list2) > 0) {
+			// find smaller value and insert it into the new list
+			if (first(list1).compareTo(first(list2)) < 0) {
+				cons(first(list1), newList);
+				list1 = rest(list1);
+			} else {
+				cons(first(list2), newList);
+				list2 = rest(list2);
+			}
+		}
+
+		// copy remaining data from the left list
+		while (length(list1) > 0) {
+			cons(first(list1), newList);
+			list1 = rest(list1);
+		}
+
+		while (length(list2) > 0) {
+			cons(first(list2), newList);
+			list2 = rest(list2);
+		}
+
+		return newList;
+	}
+
+	/**
+	 * Returns the first "n" elements from list:
+	 * 
+	 * firstn( 0, [1,2,3] ) => [] firstn( 1, [1,2,3] ) => [1] firstn( 2, [1,2,3]
+	 * ) => [1, 2], etc.
+	 * 
+	 * Observe that firstn(0, [1,2,3]) returns null (or the empty list). In your
+	 * implementation: just return the "list" parameter.
+	 * 
+	 * @param n
+	 * @param list
+	 * @return
+	 */
+	public static <T> LList<T> firstn(int n, LList<T> list) {
+		LList<T> newList = LList();
+		if (n == 0) {
+			return null;
+		} else {
+			for (int i = 0; i < n; i++) {
+				newList = cons(first(list), newList);
+				list = rest(list);
+			}
+		}
+
+		return reverse(newList);
+	}
+
+	/**
+	 * Returns the last "n" elements from list:
+	 * 
+	 * lastn( 0, [1,2,3] ) => [1,2,3] lastn( 1, [1,2,3] ) => [3] lastn( 2,
+	 * [1,2,3] ) => [2,3]
+	 * 
+	 * @param n
+	 * @param list
+	 * @return
+	 */
+	public static <T> LList<T> lastn(int n, LList<T> list) {
+		if (n == 0) {
+			return list;
+		} else {
+			for (int i = 0; i < n; i++) {
+				list = rest(list);
+			}
+		}
+		return list;
+
+	}
+
+}

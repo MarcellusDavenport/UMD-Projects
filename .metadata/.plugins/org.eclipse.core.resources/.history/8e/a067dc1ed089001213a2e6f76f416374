@@ -1,0 +1,173 @@
+package fighters;
+
+import framework.BattleField;
+import framework.Random131;
+
+public class BasicSoldier {
+
+	public final static int INITIAL_HEALTH = 10;
+	public final static int ARMOR = 20;
+	public final static int STRENGTH = 30;
+	public final static int SKILL = 40;
+	
+	public final static int UP = 0;
+	public final static int RIGHT = 1;
+	public final static int DOWN = 2;
+	public final static int LEFT = 3;
+	public final static int UP_AND_RIGHT = 4;
+	public final static int DOWN_AND_RIGHT = 5;
+	public final static int DOWN_AND_LEFT = 6;
+	public final static int UP_AND_LEFT = 7;
+	public final static int NEUTRAL = -1;
+	
+	public final BattleField battleField;
+	public int row, col;
+	public int health; 
+	public final int team;
+	
+	public BasicSoldier(BattleField battleFieldIn, int teamIn, int rowIn, int colIn) {
+		health = INITIAL_HEALTH;
+		team = teamIn;
+		battleField = battleFieldIn; 
+		row = rowIn;
+		col = colIn;		
+	}
+	
+	public boolean canMove() {
+		if ((battleField.get(row - 1, col) == BattleField.EMPTY) || 
+		   (battleField.get(row + 1, col) == BattleField.EMPTY) || 
+		   (battleField.get(row, col - 1) == BattleField.EMPTY) ||
+		   (battleField.get(row, col + 1) == BattleField.EMPTY)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public int numberOfEnemiesRemaining() {
+		int numEnemies = 0;
+		for (int battleRow = 0; battleRow < battleField.getRows(); battleRow++) {
+			for (int battleCol = 0; battleCol < battleField.getCols(); battleCol++ ) {
+				if ((battleField.get(battleRow,battleCol) == BattleField.RED_TEAM) && (team == BattleField.BLUE_TEAM)) {
+					numEnemies++;
+				}
+				if ((battleField.get(battleRow,battleCol) == BattleField.BLUE_TEAM) && (team == BattleField.RED_TEAM)) {
+					numEnemies++;
+				}
+			}
+		}
+		return numEnemies;
+	}
+	
+	public int getDistance(int destinationRow, int destinationCol) {
+		int distanceCol = col - destinationCol;
+		int distanceRow = row - destinationRow;
+		distanceCol = Math.abs(distanceCol);
+		distanceRow = Math.abs(distanceRow);
+		int total = distanceCol + distanceRow;
+		return total;
+	}
+	
+	public int getDirection(int destinationRow, int destinationCol) {
+		if ((destinationRow > row) && (destinationCol == col)) {
+			return DOWN;
+		} else if ((destinationRow > row) && (destinationCol > col)) {
+			return DOWN_AND_RIGHT;
+		} else if ((destinationRow > row) && (destinationCol < col)) {
+			return DOWN_AND_LEFT;
+		} else if ((destinationRow < row) && (destinationCol == col)) {
+			return UP;
+		} else if ((destinationRow < row) && (destinationCol > col)) {
+			return UP_AND_RIGHT;
+		} else if ((destinationRow < row) && (destinationCol < col)) {
+			return UP_AND_LEFT;
+		} else if ((destinationRow == row) && (destinationCol < col)) {
+			return LEFT;
+		} else if ((destinationRow == row) && (destinationCol > col)) {
+			return RIGHT;
+		} else {
+			return NEUTRAL;
+		}
+	}
+	
+	public int getDirectionOfNearestFriend() {
+		int currentVal = 1000;
+		int currentDirection = 0;
+		for (int battleRow = 0; battleRow < battleField.getRows(); battleRow++) {
+			for (int battleCol = 0; battleCol < battleField.getCols(); battleCol++) {
+				if (((battleField.get(battleRow,battleCol) == BattleField.RED_TEAM) && (team == BattleField.RED_TEAM))
+				|| ((battleField.get(battleRow,battleCol) == BattleField.BLUE_TEAM) && (team == BattleField.BLUE_TEAM)) 
+				&& (battleRow != row) && (battleCol != col)){
+					if (currentVal == 1000) {
+						currentVal = getDistance(battleRow, battleCol);
+					}
+					if (getDistance(battleRow, battleCol) < currentVal) {
+						currentVal = getDistance(battleRow, battleCol);
+						currentDirection = getDirection(battleRow, battleCol);
+					}
+				}
+			}
+		}
+		if (currentVal == 1000) {
+			return NEUTRAL;
+		}
+		return currentDirection;
+	}
+	
+	public int countNearbyFriends(int radius) {
+		int counter = 0;
+		for (int battleRow = 0; battleRow < battleField.getRows(); battleRow++) {
+			for (int battleCol = 0; battleCol < battleField.getCols(); battleCol++) {
+				if (((battleField.get(battleRow,battleCol) == BattleField.RED_TEAM) && (team == BattleField.RED_TEAM))
+					|| ((battleField.get(battleRow,battleCol) == BattleField.BLUE_TEAM) && (team == BattleField.BLUE_TEAM)) 
+					&& (battleRow != row) && (battleCol != col)) {
+					if (getDistance(battleRow,battleCol) < radius) {
+						counter++;
+					}
+				}
+			}
+		}
+		return counter;
+	}
+
+	public int getDirectionOfNearestEnemy(int radius) {
+		int currentVal = 1000;
+		int currentDirection = 0;
+		for (int battleRow = 0; battleRow < battleField.getRows(); battleRow++) {
+			for (int battleCol = 0; battleCol < battleField.getCols(); battleCol++) {
+				if (((battleField.get(battleRow,battleCol) == BattleField.RED_TEAM) && (team == BattleField.BLUE_TEAM))
+					|| ((battleField.get(battleRow,battleCol) == BattleField.BLUE_TEAM) && (team == BattleField.RED_TEAM))) {
+					if (getDistance(battleRow,battleCol) < radius) {
+						if (currentVal == 1000) {
+							currentVal = getDistance(battleRow, battleCol);
+						}
+						if (getDistance(battleRow, battleCol) < currentVal) {
+							currentVal = getDistance(battleRow, battleCol);
+							currentDirection = getDirection(battleRow, battleCol);
+						}
+					}
+				}
+			}
+		}
+		if (currentVal == 1000) {
+			return NEUTRAL;
+		}
+		return currentDirection;
+	}
+	
+	public void performMyTurn() {
+		if (team == BattleField.RED_TEAM) {
+			((battleField.get(row - 1, col) == BattleField.EMPTY) || 
+			(battleField.get(row + 1, col) == BattleField.EMPTY) || 
+			(battleField.get(row, col - 1) == BattleField.EMPTY) ||
+			(battleField.get(row, col + 1) == BattleField.EMPTY)) {
+				
+			}
+				
+		}
+	}
+	
+	
+
+	
+}

@@ -1,0 +1,11 @@
+# Submit server .submit file for
+#  Course CMSC131-040x
+#  Project 1: Sports Quiz
+
+courseName=CMSC131-040x
+semester=201301
+projectNumber=1
+courseKey=fa507c4fccc1058c
+authentication.type=ldap
+baseURL=https://submit.cs.umd.edu:443
+submitURL=https://submit.cs.umd.edu:443/eclipse/SubmitProjectViaEclipse

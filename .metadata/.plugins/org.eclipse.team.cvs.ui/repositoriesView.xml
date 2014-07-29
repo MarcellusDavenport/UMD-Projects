@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories-view>
+	<repository id=":extssh:cs132032@linuxlab.csic.umd.edu:/afs/csic.umd.edu/users/tomr55/cvs132Spring2014/cs132032">
+		<module path="/">
+		</module>
+	</repository>
+	<repository id=":extssh:cs131400@linuxlab.csic.umd.edu:/afs/csic.umd.edu/users/fpe/cvs131Spring13/cs131400">
+		<module path="/">
+		</module>
+	</repository>
+</repositories-view>

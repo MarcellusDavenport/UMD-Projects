@@ -1,0 +1,23 @@
+import java.awt.Color;
+import CMSC131GridTools.DrawingGrid;
+
+public class LetterMaker {
+	
+	public static void drawLetter(DrawingGrid grid, char letter, Color color) {
+		if (letter == 'L') {
+			int size = grid.getScale();
+			for (int i = 0; i < size; i++ ) {
+				grid.setColor(3, 3, color);
+			}
+			
+			
+		}
+		
+		
+	}
+	
+	public void setColor(int row, int col, Color color) {
+		  
+		
+	}
+}

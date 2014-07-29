@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Loops {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter a shape.");
+		sc.nextLine();
+		String shape = sc.nextLine();
+		System.out.println("Enter a size.");
+		int size = sc.nextInt();
+		
+		if (shape.equals("square")) {
+			
+		}
+		
+		
+
+	}
+
+}
